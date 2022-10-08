@@ -54,7 +54,7 @@ headerObserver.observe(header);
 
 //  reveal section
 
-function revealSection(entries, observer) {
+/* function revealSection(entries, observer) {
   const [entry] = entries;
   if (!entry.isIntersecting) return;
   entry.target.classList.remove("section--hidden");
@@ -63,14 +63,15 @@ function revealSection(entries, observer) {
 
 const sectionObs = new IntersectionObserver(revealSection, {
   root: null,
-  threshold: 0.3,
+  threshold: 0.1,
+  rootMargin: "200px",
 });
 
 allSections.forEach((section) => {
   sectionObs.observe(section);
   section.classList.add("section--hidden");
 });
-
+ */
 // Modal window
 
 function openModal(e) {
@@ -211,4 +212,21 @@ btnRight.addEventListener("click", nextSlide);
 document.addEventListener("keydown", (e) => {
   e.key === "ArrowLeft" && previousSlide();
   e.key === "ArrowRight" && nextSlide();
+});
+
+// tabbed components
+tabsContainer.addEventListener("click", function (e) {
+  const btn = e.target.closest(".operations__tab");
+
+  if (!btn) return;
+
+  tabs.forEach((tab) => tab.classList.remove("operations__tab--active"));
+  tabsContent.forEach((content) =>
+    content.classList.remove("operations__content--active")
+  );
+
+  btn.classList.add("operations__tab--active");
+  document
+    .querySelector(`.operations__content--${btn.dataset.tab}`)
+    .classList.add("operations__content--active");
 });
